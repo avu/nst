@@ -7,9 +7,6 @@ import java.awt.event.WindowEvent;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MyTouchBarTest {
-    static {
-        System.loadLibrary("nst");
-    }
 
     @Test
     public void testTouch() throws InterruptedException {
@@ -17,6 +14,8 @@ public class MyTouchBarTest {
 
         SwingUtilities.invokeLater(() -> {
             Foundation.init();
+            NSTLibrary lib = NST.getMyNSTLibrary();
+            lib.registerCallback(new MyCallBack());
             ID nsapp = Foundation.invoke("NSApplication", "sharedApplication");
             Foundation.invoke(nsapp, "setAutomaticCustomizeTouchBarMenuItemEnabled:", true);
             ID tb = Foundation.invoke(Foundation.invoke("NSTouchBar", "alloc"), "init");
@@ -24,7 +23,7 @@ public class MyTouchBarTest {
             Foundation.invoke(tb, "setDelegate:", tbd);
             final ID items = Foundation.invoke("NSArray", "arrayWithObjects:",
                     Foundation.convertTypes(new String[]{
-                            "label",
+                            "label", "button",
                             "NSTouchBarItemIdentifierOtherItemsProxy", null}));
 
             Foundation.invoke(tb, "setDefaultItemIdentifiers:", items);
