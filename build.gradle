@@ -16,8 +16,7 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 test {
-    //systemProperty "java.library.path", file("${buildDir}/libs/nst/shared").absolutePath
-    systemProperty "java.library.path", '/Users/avu/IdeaProjects/nst/build/libs/nst/shared'
+    systemProperty "java.library.path", file("${buildDir}/libs/nst/shared").absolutePath
 
 }
 
